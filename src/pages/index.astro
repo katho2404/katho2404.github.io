@@ -5,7 +5,7 @@ import MdiRss from "~icons/mdi/rss";
 
 import PostsList from "../components/PostsList.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getCollection } from "astro:content";
+import { getCollection, CollectionEntry } from "astro:content";
 import SeriesList from "../components/SeriesList.astro";
 
 const posts = await getCollection("blog");
@@ -17,7 +17,8 @@ const sortedPosts = posts
 
 const featuredPosts = posts.filter((post) => post.data.featured);
 
-const featuredSeries = (await getCollection("series")).filter((s) => s.data.featured);
+const featuredSeries: CollectionEntry<"series">[] = [];
+// const featuredSeries = (await getCollection("series"))?.filter((s) => s.data.featured);
 ---
 
 <BaseLayout>
@@ -25,7 +26,7 @@ const featuredSeries = (await getCollection("series")).filter((s) => s.data.feat
     <div class="space-y-4">
       <h1 class="text-4xl text-black dark:text-white font-black">
         Hello there! <span
-          class="underline underline-offset-2 decoration-palette2 dark:decoration-palette3"
+          class="underline underline-offset-2 decoration-palette2 dark:decoration-palette3 text-"
           >I'm Katharina</span
         >
       </h1>
@@ -42,7 +43,7 @@ const featuredSeries = (await getCollection("series")).filter((s) => s.data.feat
         <a
           href="https://twitter.com/katho2404"
           target="_blank"
-          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-slate-300 hover:bg-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-palette4 hover:bg-palette5 text-white dark:bg-palette5 dark:hover:bg-palette4  dark:text-black"
         >
           <MdiTwitter />
           <span>Twitter</span>
@@ -50,7 +51,7 @@ const featuredSeries = (await getCollection("series")).filter((s) => s.data.feat
         <a
           href="https://github.com/katho2404"
           target="_blank"
-          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-slate-300 hover:bg-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-palette4 hover:bg-palette5 text-white dark:bg-palette5 dark:hover:bg-palette4  dark:text-black"
         >
           <MdiGithub />
           <span>GitHub</span>
@@ -58,7 +59,7 @@ const featuredSeries = (await getCollection("series")).filter((s) => s.data.feat
         <a
           href="/rss.xml"
           target="_blank"
-          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-slate-300 hover:bg-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-palette4 hover:bg-palette5 text-white dark:bg-palette5 dark:hover:bg-palette4  dark:text-black"
         >
           <MdiRss />
           <span>RSS</span>
@@ -78,7 +79,7 @@ const featuredSeries = (await getCollection("series")).filter((s) => s.data.feat
         <h1 class="text-3xl text-black dark:text-white">Latest Posts</h1>
         <a
           href="/blog"
-          class="inline-flex items-center justify-center py-0.5 px-3 bg-palette4 hover:bg-palette5 rounded-full text-sm text-white"
+          class="inline-flex items-center justify-center py-0.5 px-3 bg-palette4 hover:bg-palette5 text-white dark:bg-palette5 dark:hover:bg-palette4  dark:text-black rounded-full text-sm"
           >View all</a
         >
       </div>
@@ -91,7 +92,7 @@ const featuredSeries = (await getCollection("series")).filter((s) => s.data.feat
             <h1 class="text-3xl text-black dark:text-white">Featured Series</h1>
             <a
               href="/series"
-              class="inline-flex items-center justify-center py-0.5 px-3 bg-palette4 hover:bg-palette5 rounded-full text-sm text-white"
+              class="inline-flex items-center justify-center py-0.5 px-3 bg-palette4 hover:bg-palette5 text-white dark:bg-palette5 dark:hover:bg-palette4  dark:text-black rounded-full text-sm "
             >
               View all
             </a>
