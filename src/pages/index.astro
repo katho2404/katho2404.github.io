@@ -1,50 +1,104 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import MdiTwitter from "~icons/mdi/twitter";
+import MdiGithub from "~icons/mdi/github";
+import MdiRss from "~icons/mdi/rss";
+
+import PostsList from "../components/PostsList.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import SeriesList from "../components/SeriesList.astro";
+
+const posts = await getCollection("blog");
+
+const sortedPosts = posts
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .filter((post) => !post.data.planned)
+  .slice(0, 3);
+
+const featuredPosts = posts.filter((post) => post.data.featured);
+
+const featuredSeries = (await getCollection("series")).filter((s) => s.data.featured);
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header title={SITE_TITLE} />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to build
-				a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/pages/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to <a href="https://docs.astro.build/"
-					>read the docs
-				</a> or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out <a
-					href="https://github.com/Charca/astro-blog-template"
-					>astro-blog-template
-				</a> by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
-</html>
+<BaseLayout>
+  <div class="space-y-10">
+    <div class="space-y-4">
+      <h1 class="text-4xl text-black dark:text-white font-black">
+        Hello there! <span
+          class="underline underline-offset-2 decoration-fuchsia-600 dark:decoration-fuchsia-400"
+          >I'm Katharina</span
+        >
+      </h1>
+      <p>
+        Welcome to my blog! I'm a software engineer and solution architect with experience in <span class="font-black"
+          >Sitecore</span
+        >, <span class="font-black">C# and .Net</span>, <span class="font-black"
+          >Javascript/Typescript</span
+        >, and <span class="font-black">Next.js</span>. As
+        an enthusiastic learner, I aim to share my journey of exploration with you. Join me as I
+        write about various aspects of working with Sitecore products and implementing amazing experiences for customers.
+      </p>
+      <div class="space-x-1">
+        <a
+          href="https://twitter.com/katho2404"
+          target="_blank"
+          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-slate-300 hover:bg-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+        >
+          <MdiTwitter />
+          <span>Twitter</span>
+        </a>
+        <a
+          href="https://github.com/katho2404"
+          target="_blank"
+          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-slate-300 hover:bg-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+        >
+          <MdiGithub />
+          <span>GitHub</span>
+        </a>
+        <a
+          href="/rss.xml"
+          target="_blank"
+          class="inline-flex items-center justify-center space-x-2 py-2 px-3 rounded-md bg-slate-300 hover:bg-slate-400 dark:bg-slate-800 dark:hover:bg-slate-700"
+        >
+          <MdiRss />
+          <span>RSS</span>
+        </a>
+      </div>
+    </div>
+    {
+      featuredPosts.length > 0 && (
+        <div class="space-y-5">
+          <h1 class="text-3xl text-black dark:text-white">Featured Posts</h1>
+          <PostsList posts={featuredPosts} />
+        </div>
+      )
+    }
+    <div class="space-y-5">
+      <div class="flex items-center justify-between space-x-2">
+        <h1 class="text-3xl text-black dark:text-white">Latest Posts</h1>
+        <a
+          href="/blog"
+          class="inline-flex items-center justify-center py-0.5 px-3 bg-blue-600 hover:bg-blue-800 rounded-full text-sm text-white"
+          >View all</a
+        >
+      </div>
+      <PostsList posts={sortedPosts} />
+    </div>
+    {
+      featuredSeries.length > 0 && (
+        <div class="space-y-5">
+          <div class="flex items-center justify-between space-x-2">
+            <h1 class="text-3xl text-black dark:text-white">Featured Series</h1>
+            <a
+              href="/series"
+              class="inline-flex items-center justify-center py-0.5 px-3 bg-blue-600 hover:bg-blue-800 rounded-full text-sm text-white"
+            >
+              View all
+            </a>
+          </div>
+          <SeriesList series={featuredSeries} />
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>
