@@ -2,7 +2,9 @@
 title: "First post"
 description: "Lorem ipsum dolor sit amet"
 featured: true
-pubDate: "Jul 09 2023"
+seriesId: first-series
+orderInSeries: 1
+pubDate: "Jul 08 2022"
 tags:
   - first-post
 ---

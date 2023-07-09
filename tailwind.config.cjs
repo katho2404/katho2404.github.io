@@ -11,8 +11,10 @@ module.exports = {
         righteous: ["Righteous", "Helvetica Neue", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        primary: "#388E3C",
-        primaryLight: "#82b584",
+        primary: {
+          600: "#388E3C",
+          400: "#82b584",
+        },
         
         // Jam3 Nice Palette Set 73
         palette1: "#2d2d29",
